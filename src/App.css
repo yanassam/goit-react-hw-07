@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.title{
+  font-size: 40px; 
+  color: #2a2a2a; 
+  margin: 15px 0; 
+}
+.wrap{
+  display: flex;
+gap: 40px;
+}

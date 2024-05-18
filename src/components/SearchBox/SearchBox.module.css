@@ -1,0 +1,17 @@
+.addContact { 
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: pink;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+.find{
+  width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccccccd5;
+    border-radius: 4px;
+}
