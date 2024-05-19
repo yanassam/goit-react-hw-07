@@ -1,35 +1,68 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector, isAnyOf } from "@reduxjs/toolkit";
+import {
+  addContactsThunk,
+  deleteContactsThunk,
+  fetchContactsThunk,
+} from "./contactsOps";
 
 const initialState = {
-  items: [
-    { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  ],
+  items: [],
+  isLoading: false,
+  error: null,
 };
 
 // создаю слайс для контакта
 export const contactsSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {
-    addContact: (state, action) => {
-      state.items.push(action.payload);
-    },
-
-    deleteContact: (state, action) => {
-      state.items = state.items.filter(
-        (contact) => contact.id !== action.payload
+  extraReducers: (bilder) => {
+    bilder
+      .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
+        state.items = payload;
+      })
+      .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
+        state.items.push(payload);
+      })
+      .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
+        state.items = state.items.filter((contact) => contact.id !== payload);
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchContactsThunk.pending,
+          deleteContactsThunk.pending,
+          addContactsThunk.pending
+        ),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContactsThunk.rejected,
+          deleteContactsThunk.rejected,
+          addContactsThunk.rejected
+        ),
+        (state) => {
+          state.isLoading = false;
+          state.error = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContactsThunk.fulfilled,
+          deleteContactsThunk.fulfilled,
+          addContactsThunk.fulfilled
+        ),
+        (state) => {
+          state.isLoading = false;
+          state.error = null;
+        }
       );
-    },
   },
 });
 
-//генератор actions
-export const { addContact, deleteContact } = contactsSlice.actions;
-
-// Селекторы ???
+// Селекторы
 export const selectContacts = (state) => state.contacts.items;
 
 export const selectFilteredContacts = createSelector(

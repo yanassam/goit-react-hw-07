@@ -3,7 +3,8 @@ import s from "./Contact.module.css";
 import { IoCallSharp } from "react-icons/io5";
 import { IoAccessibility } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
+
+import { deleteContactsThunk } from "../../redux/contactsOps";
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Contact = ({ contact }) => {
       <div>
         <button
           className={s.buttonDel}
-          onClick={() => dispatch(deleteContact(contact.id))}
+          onClick={() => dispatch(deleteContactsThunk(contact.id))}
         >
           Delete
         </button>
