@@ -1,5 +1,4 @@
 import s from "./ContactForm.module.css";
-import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 // ********
@@ -8,8 +7,8 @@ import { addContactsThunk } from "../../redux/contactsOps";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const nameId = useId();
-  const numberId = useId();
+  // const nameId = useId();
+  // const numberId = useId();
 
   const initialValues = {
     name: "",
@@ -40,16 +39,16 @@ const ContactForm = () => {
     >
       <Form className={s.form}>
         <div>
-          <label htmlFor={nameId}>{"Name*"}</label>
-          <Field type="text" name="name" id={nameId} autoComplete="false" />
+          <label htmlFor="name">{"Name*"}</label>
+          <Field type="text" name="name" id="name" autoComplete="false" />
           <ErrorMessage name="name" component="span" className={s.error} />
         </div>
         <div>
-          <label htmlFor={numberId}>{"Number*"}</label>
+          <label htmlFor="number">{"Number*"}</label>
           <Field
             type="phone"
             name="number"
-            id={numberId}
+            id="number"
             autoComplete="false"
             className={s.number}
           />
